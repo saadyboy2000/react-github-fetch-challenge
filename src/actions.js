@@ -1,3 +1,8 @@
+/*
+
+Write the fetchRepos async action in src/actions.js, which should make a GET request to https://api.github.com/users/dhh/repos, following the Request/Success/Error pattern.
+
+*/
 export const FETCH_REPOS_REQUEST = 'FETCH_REPOS_REQUEST';
 export const fetchReposRequest = () => ({
     type: FETCH_REPOS_REQUEST
@@ -15,4 +20,15 @@ export const fetchReposError = error => ({
     error
 });
 
-export const fetchRepos = null; // Write me!
+export const fetchBoard = () => dispatch => {
+    fetch(`https://api.github.com/users/dhh/repos`)
+        .then(res => {
+            if (!res.ok) {
+                return Promise.reject(res.statusText);
+            }
+            return res.json();
+        })
+        .then(board => {
+            dispatch(fetchBoardSuccess(board));
+        });
+
